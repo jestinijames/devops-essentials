@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-essentials
+  labels:
+    app: devops-essentials
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-essentials
+  template:
+    metadata:
+      labels:
+        app: devops-essentials
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/YOUR_GITHUB_USERNAME/devops-essentials:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: production
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5

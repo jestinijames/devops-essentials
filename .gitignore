@@ -1,0 +1,19 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+
+# Keep the lock file (it's like package-lock.json)
+# .terraform.lock.hcl  ← commit this
+
+# Node
+node_modules/
+.next/
+
+# Docker
+*.log
+
+# OS
+.DS_Store

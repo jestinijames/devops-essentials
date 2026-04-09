@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app
+      - /app/node_modules # prevent host node_modules from overwriting container's
+      - /app/.next # prevent host .next from overwriting container's
+    environment:
+      - NODE_ENV=development
