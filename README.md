@@ -48,6 +48,43 @@ It's a simple web app, but it will grow with you. By the end of this curriculum:
 
 > Install these before starting. Everything else (kubectl, terraform, etc.) is installed as part of its module.
 
+### Verify your setup
+
+Run this to confirm what you have installed before starting:
+
+```bash
+# Phase 1 — needed from day 1
+node --version          # should be v20+
+pnpm --version          # should be 9+
+git --version           # should be 2.40+
+python --version        # should be 3.11+
+
+# Phase 2 — install Docker Desktop first
+docker --version
+docker compose version
+
+# Phase 4 — installed during Module 04
+terraform --version
+
+# Phase 5 — installed during Module 05
+kubectl version --client
+minikube version        # or: kind version
+helm version
+
+# Phase 6 — installed during Module 07
+ansible --version
+
+# Phase 7 — installed during Module 08
+argocd version
+
+# Cloud CLIs — installed during Modules 09/10/10b
+aws --version
+gcloud --version
+az --version
+```
+
+Don't worry if most of these say "not found" — that's expected. Each module tells you exactly when and how to install the tool it needs.
+
 ---
 
 ## Learning Roadmap
@@ -113,7 +150,7 @@ It's a simple web app, but it will grow with you. By the end of this curriculum:
 
 ## Keyword Decoder
 
-You mentioned a bunch of terms — here's what they all mean at a glance:
+DevOps comes with a lot of jargon. Here's a plain-English reference for every term you'll encounter in this curriculum:
 
 | Keyword | What it is | Where you'll learn it |
 |---------|-----------|----------------------|
@@ -197,3 +234,107 @@ pnpm dev
 ```
 
 Then open [Module 00 — Git Foundations](./modules/00-git-foundations/README.md) and begin.
+
+---
+
+## Quick Reference Cheat Sheet
+
+Commands you'll use constantly across all modules.
+
+### Git
+```bash
+git status
+git log --oneline --graph --all     # visual branch history
+git checkout -b feat/my-feature
+git add . && git commit -m "feat(app): my change"
+git push origin HEAD
+git stash / git stash pop
+```
+
+### pnpm
+```bash
+pnpm install             # install dependencies
+pnpm dev                 # start dev server
+pnpm build               # production build
+pnpm add <package>       # add a dependency
+pnpm add -D <package>    # add a dev dependency
+pnpm remove <package>
+```
+
+### Docker
+```bash
+docker build -t my-app:latest .      # build image
+docker run -d -p 3000:3000 my-app    # run container
+docker ps                            # list running containers
+docker ps -a                         # all containers including stopped
+docker logs -f <container>          # follow logs
+docker exec -it <container> sh      # shell inside container
+docker stop <container>
+docker rm <container>
+docker images
+docker rmi <image>
+docker system prune -a               # clean up everything
+
+docker compose up -d
+docker compose down
+docker compose logs -f
+docker compose ps
+```
+
+### Kubernetes
+```bash
+kubectl get pods                     # list pods
+kubectl get pods -w                  # watch pods
+kubectl get deployments
+kubectl get services
+kubectl get all                      # everything
+kubectl apply -f k8s/               # apply all manifests in folder
+kubectl delete -f k8s/
+kubectl logs -f deployment/my-app
+kubectl exec -it <pod> -- sh
+kubectl describe pod <pod>           # debug a failing pod
+kubectl port-forward svc/my-svc 8080:80
+kubectl scale deployment my-app --replicas=3
+kubectl rollout status deployment/my-app
+kubectl rollout undo deployment/my-app
+kubectl rollout history deployment/my-app
+
+# Helm
+helm install <release> <chart>
+helm upgrade <release> <chart>
+helm uninstall <release>
+helm list
+```
+
+### Terraform
+```bash
+terraform init           # download providers
+terraform plan           # preview changes (safe, read-only)
+terraform apply          # make changes
+terraform apply -auto-approve   # skip confirmation (CI only)
+terraform destroy        # tear everything down
+terraform fmt            # format .tf files
+terraform validate       # check config syntax
+terraform output         # show output values
+terraform state list     # list tracked resources
+```
+
+### Ansible
+```bash
+ansible all -i inventory/ -m ping                   # test connectivity
+ansible-playbook -i inventory/ playbook.yml         # run a playbook
+ansible-playbook -i inventory/ playbook.yml --check # dry run
+ansible-playbook -i inventory/ playbook.yml -v      # verbose
+ansible-vault create secrets.yml
+ansible-vault edit secrets.yml
+```
+
+### Python (DevOps scripts)
+```bash
+python -m venv .venv          # create virtual environment
+.venv\Scripts\activate        # activate (Windows)
+source .venv/bin/activate     # activate (Mac/Linux)
+pip install requests pyyaml   # install packages
+python script.py --help
+python script.py              # exit 0 = success, exit 1 = failure in CI
+```
