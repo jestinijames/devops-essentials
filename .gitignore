@@ -1,0 +1,43 @@
+# ── Terraform ───────────────────────────────────────────
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+terraform/*/output/
+*.tfvars.secret
+
+# ── Ansible ─────────────────────────────────────────────
+*.retry
+ansible/vars/secrets.yml
+
+# ── Python ──────────────────────────────────────────────
+__pycache__/
+*.pyc
+.venv/
+venv/
+modules/01-python-basics/.venv/
+
+# ── Docker ──────────────────────────────────────────────
+.docker/
+
+# ── Kubernetes secrets ───────────────────────────────────
+*-secret.yaml
+*-secret.yml
+
+# ── Environment variables ────────────────────────────────
+.env
+.env.local
+.env.production
+.env.*.local
+
+# ── Vagrant ─────────────────────────────────────────────
+vagrant/.vagrant/
+vagrant/*/log/
+
+# ── OS ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ──────────────────────────────────────────────────
+.idea/
+*.swp
