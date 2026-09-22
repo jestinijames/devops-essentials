@@ -18,21 +18,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: pnpm
+          cache-dependency-path: app/pnpm-lock.yaml
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: app/.next/cache
-          # Cache key based on OS and package lock hash
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('app/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-
+      - name: Enable pnpm
+        run: corepack enable
 
       - name: Install dependencies
-        run: cd app && npm ci
+        run: cd app && pnpm install --frozen-lockfile
 
       - name: Lint
-        run: cd app && npm run lint
+        run: cd app && pnpm run lint
 
       - name: Build
-        run: cd app && npm run build
+        run: cd app && pnpm run build

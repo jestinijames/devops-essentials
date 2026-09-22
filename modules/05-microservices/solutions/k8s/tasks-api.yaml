@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasks-api
+  labels:
+    app: tasks-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tasks-api
+  template:
+    metadata:
+      labels:
+        app: tasks-api
+    spec:
+      containers:
+        - name: tasks-api
+          image: ghcr.io/YOUR_GITHUB_USERNAME/tasks-api:latest
+          ports:
+            - containerPort: 4000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasks-api-svc
+spec:
+  selector:
+    app: tasks-api
+  ports:
+    - port: 80
+      targetPort: 4000
+  type: ClusterIP

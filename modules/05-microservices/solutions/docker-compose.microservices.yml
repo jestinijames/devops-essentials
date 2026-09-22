@@ -1,0 +1,28 @@
+services:
+  tasks-api:
+    build: ./microservices/tasks-api
+    ports:
+      - "4000:4000"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      TASKS_API_URL: http://tasks-api:4000
+    depends_on:
+      - tasks-api
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -3,14 +3,14 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm ci
+COPY package.json pnpm-lock.yaml ./
+RUN corepack enable && pnpm install --frozen-lockfile
 
 COPY . .
 
 # Build the Next.js app in standalone mode
 # (requires output: "standalone" in next.config.ts)
-RUN npm run build
+RUN pnpm run build
 
 # ---- Stage 2: Run ----
 FROM node:22-alpine AS runner

@@ -9,7 +9,7 @@
 Right now your workflow is:
 
 1. Write code
-2. Manually run `npm run build` to check it compiles
+2. Manually run `pnpm run build` to check it compiles
 3. Manually run `docker build` to make the image
 4. Manually push it somewhere
 5. Manually deploy it
@@ -64,10 +64,10 @@ jobs:
           node-version: "22"
 
       - name: Install dependencies
-        run: npm ci # Single-line shell command
+        run: pnpm install --frozen-lockfile # Single-line shell command
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 ```
 
 ### Job dependencies
@@ -107,9 +107,9 @@ Your tasks:
    a. Check out the code
    b. Set up Node.js 22
    c. Cache node_modules (use actions/cache@v4 with the npm cache key)
-   d. Run: cd app && npm ci
-   e. Run: cd app && npm run lint
-   f. Run: cd app && npm run build
+  d. Run: cd app && pnpm install --frozen-lockfile
+  e. Run: cd app && pnpm run lint
+  f. Run: cd app && pnpm run build
 ```
 
 Push your branch and open a PR to `main`. Watch the Actions tab in GitHub.

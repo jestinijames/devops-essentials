@@ -34,8 +34,9 @@ Run it locally first so you know what you're working with:
 
 ```bash
 cd app
-npm install
-npm run dev
+corepack enable
+pnpm install --frozen-lockfile
+pnpm run dev
 ```
 
 Visit `http://localhost:3000` and `http://localhost:3000/api/health`.
@@ -44,14 +45,18 @@ Visit `http://localhost:3000` and `http://localhost:3000/api/health`.
 
 ## Modules
 
-| #                                           | Module                     | What you build                                | Key tools              |
-| ------------------------------------------- | -------------------------- | --------------------------------------------- | ---------------------- |
-| [01](./modules/01-docker/README.md)         | **Docker**                 | Containerize the Next.js app                  | Docker, Docker Compose |
-| [02](./modules/02-github-actions/README.md) | **GitHub Actions & CI/CD** | Automated lint → test → build → push pipeline | GitHub Actions         |
-| [03](./modules/03-terraform/README.md)      | **Terraform**              | Provision cloud infra with code               | Terraform, HCL         |
-| [04](./modules/04-kubernetes/README.md)     | **Kubernetes**             | Deploy & scale containers                     | kubectl, minikube      |
-| [05](./modules/05-microservices/README.md)  | **Microservices**          | Break the app into independent services       | Docker Compose, K8s    |
-| [06](./modules/06-cloud/README.md)          | **Cloud**                  | Deploy to GCP / AWS / Azure                   | gcloud, aws cli, az    |
+| #                                           | Module                     | What you build                          | Key tools              |
+| ------------------------------------------- | -------------------------- | --------------------------------------- | ---------------------- |
+| [01](./modules/01-docker/README.md)         | **Docker**                 | Containerize the Next.js app            | Docker, Docker Compose |
+| [02](./modules/02-github-actions/README.md) | **GitHub Actions & CI/CD** | Automated lint → build → push pipeline  | GitHub Actions         |
+| [03](./modules/03-terraform/README.md)      | **Terraform**              | Provision cloud infra with code         | Terraform, HCL         |
+| [04](./modules/04-kubernetes/README.md)     | **Kubernetes**             | Deploy & scale containers               | kubectl, minikube      |
+| [05](./modules/05-microservices/README.md)  | **Microservices**          | Break the app into independent services | Docker Compose, K8s    |
+| [06](./modules/06-cloud/README.md)          | **Cloud**                  | Deploy to GCP / AWS / Azure             | gcloud, aws cli, az    |
+| [07](./modules/07-foundations/README.md)    | **Foundations**            | Linux, networking, Git, troubleshooting | Linux, TCP/IP, Git     |
+| [08](./modules/08-security/README.md)       | **Security**               | Harden images, CI, identities, clusters | Trivy, OIDC, RBAC      |
+| [09](./modules/09-reliability/README.md)    | **Reliability**            | Observe, alert, recover, run incidents  | Prometheus, Grafana    |
+| [10](./modules/10-platform/README.md)       | **Platform & Capstone**    | GitOps and a production-style platform  | Argo CD, Helm, FinOps  |
 
 ---
 
@@ -66,6 +71,7 @@ git --version             # Module 02+
 terraform --version       # Module 03+
 kubectl version --client  # Module 04+
 minikube version          # Module 04+
+pnpm --version             # App and CI exercises
 ```
 
 Install what's missing:
@@ -74,6 +80,7 @@ Install what's missing:
 - **Terraform** → https://developer.hashicorp.com/terraform/install
 - **kubectl** → https://kubernetes.io/docs/tasks/tools/
 - **minikube** → https://minikube.sigs.k8s.io/docs/start/
+- **pnpm** → https://pnpm.io/installation
 
 ---
 
@@ -104,5 +111,10 @@ You write code
     → The whole thing repeats on every push (CD)
 ```
 
-You're going to build every step of that pipeline yourself. Let's go.
-# devops-esssentials
+You're going to build every step of that pipeline yourself. Modules 01–06 establish the delivery spine; Modules 07–10 add the foundations, security, reliability, and platform practices needed for production-level work.
+
+## Is this enough to master DevOps?
+
+It is now a serious, structured foundation, but no repository can contain all of DevOps mastery. The modules give you a sequence, a shared application, exercises, and a capstone. Mastery still requires repeating the work on different systems, reading provider documentation, operating a service over time, and making tradeoffs under cost and failure constraints.
+
+Use the checkpoints as gates. Do not treat a copied solution as completion: completion means you can explain the design, reproduce it, break it safely, recover it, and document what happened.

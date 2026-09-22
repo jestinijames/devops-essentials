@@ -30,7 +30,7 @@ jobs:
           images: ghcr.io/${{ github.repository_owner }}/devops-essentials
           tags: |
             type=raw,value=latest
-            type=sha,prefix=,format=short
+            type=sha,prefix=,format=long
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5

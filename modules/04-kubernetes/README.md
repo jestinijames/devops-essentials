@@ -40,7 +40,7 @@ A Kubernetes cluster has:
 | **Deployment** | Declares how many Pod replicas you want           | Like a React state that says "I want 3 of these" |
 | **Service**    | A stable network address to reach a set of Pods   | Like a load balancer / DNS entry                 |
 | **ConfigMap**  | Non-secret config values (env vars, config files) | `.env` file, but in the cluster                  |
-| **Secret**     | Sensitive config values (passwords, API keys)     | `.env.local` but encrypted                       |
+| **Secret**     | Sensitive config values (passwords, API keys)     | `.env.local` delivered through the cluster API   |
 | **Namespace**  | A logical partition of the cluster                | Like separate GitHub repos in an org             |
 | **Ingress**    | Routes external HTTP traffic to Services          | Like an nginx reverse proxy config               |
 
@@ -281,7 +281,7 @@ data:
   LOG_LEVEL: "info"
 ```
 
-Create `k8s/secret.yaml` (base64-encode the value):
+Create `k8s/secret.yaml` (base64 is encoding, not encryption; do not commit real secrets):
 
 ```bash
 echo -n "my-secret-api-key" | base64

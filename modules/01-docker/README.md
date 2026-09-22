@@ -41,20 +41,20 @@ A `Dockerfile` is a script that describes how to build an image. It's a series o
 ```dockerfile
 FROM node:22-alpine       # Start from an existing base image (like extending a class)
 WORKDIR /app              # Set the working directory inside the container
-COPY package*.json ./     # Copy dependency files first (for caching — explained below)
-RUN npm install           # Install dependencies
+COPY package.json pnpm-lock.yaml ./
+RUN corepack enable && pnpm install --frozen-lockfile
 COPY . .                  # Copy the rest of the source code
-RUN npm run build         # Build the Next.js app
-CMD ["npm", "start"]      # Command to run when the container starts
+RUN pnpm run build        # Build the Next.js app
+CMD ["pnpm", "start"]     # Command to run when the container starts
 ```
 
 ### Layer caching (this is important)
 
 Docker builds images in **layers** — one per instruction. Layers are cached. If nothing changed in a layer, Docker reuses the cache for that layer and all previous ones.
 
-This is why we `COPY package*.json` and `RUN npm install` **before** `COPY . .`:
+This is why we copy `package.json` and `pnpm-lock.yaml` and install dependencies **before** `COPY . .`:
 
-- If you only change a `.tsx` file, Docker reuses the cached `npm install` layer
+- If you only change a `.tsx` file, Docker reuses the cached dependency-install layer
 - Much faster builds
 
 ### Multi-stage builds
@@ -74,10 +74,10 @@ Create a file at `app/Dockerfile.dev` (for development):
 Your tasks:
 1. Use node:22-alpine as the base image
 2. Set the working directory to /app
-3. Copy package*.json and run npm install
+3. Copy package.json and pnpm-lock.yaml, then run pnpm install --frozen-lockfile
 4. Copy the rest of the source files
 5. Expose port 3000
-6. Run "npm run dev" as the start command
+6. Run "pnpm run dev" as the start command
 ```
 
 Try it **without looking at the solution** first. If you get stuck, look up:
@@ -105,7 +105,7 @@ Create `app/Dockerfile` using a **multi-stage build**:
 ```
 Stage 1 (builder):
 1. Use node:22-alpine
-2. Set workdir, copy and install deps, copy source, run npm run build
+2. Set workdir, copy and install deps, copy source, run pnpm run build
 
 Stage 2 (runner):
 1. Use node:22-alpine again (fresh, clean layer)
