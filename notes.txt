@@ -1,0 +1,8 @@
+"Frontend Dev to DevOps Engineer — Full Curriculum Setup"
+
+Practical note on returning: GitHub Copilot chat doesn't let you name or bookmark sessions — each conversation starts fresh. But that's fine because:
+
+I saved the session log — when you start a new conversation, tell me "Continue the DevOps Essentials curriculum" and I'll load the session log from repo memory automatically and know exactly where you left off
+The modules are self-contained — even without me, every modules/XX/README.md tells you exactly what to do next
+Your progress is in the module checklists — the - [ ] checkboxes in each README are your bookmark. Wherever you stopped checking boxes is where you pick up
+When you come back, just say: "I'm back to work on devops-essentials, I finished up to Module X" and we'll pick up from there.
